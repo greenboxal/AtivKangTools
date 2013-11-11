@@ -1,0 +1,54 @@
+# Sample SMD file
+# Syntax:
+#
+# Device "DeviceName"
+# * Up to 16 chars
+#
+# Version "VersionString"
+# * Up to 8 chars
+#
+# Load "Filename" "Name" [NAND Address] [NAND Size] [FileSystem ID]
+# * Name up to 16 chars
+# * NAND Address and NAND Size are specified in sectors(512 bytes)
+# * Size and FileSystem ID are optional
+#
+
+Device "GT-I8750_SIGN"
+Version "BME1"
+
+# Partition Table Header
+Load "GPT.bin"			"GPT" 		0x00000000 0x00000800
+
+# Secure Software Download
+Load "SECURE.bin"		"SECURE"	0x00000800 0x00000800
+
+# Device Provisioning Partition
+Load "DPP.bin"			"DPP"		0x00001000 0x00004000
+
+# SoC Bootloaders
+Load "SBL1.bin"			"SBL1"		0x00008000 0x00000BB7
+Load "SBL2.bin"			"SBL2"		0x00009000 0x00000BB7
+Load "SBL3.bin"			"SBL3"		0x0000A000 0x00000FFF
+
+# OS Bootloader
+Load "UEFI.bin"			"UEFI"		0x0000B000 0x00001387
+
+# Resource & Power Manager Realtime OS
+Load "RPM.bin"			"RPM"		0x0000D000 0x000003E7
+
+# TrustZone
+Load "TZ.bin"			"TZ"		0x0000E000 0x000003E7
+
+# fTPM Application
+Load "WINSECAPP.bin"	"WINSECAPP"	0x0000F000 0x000003FF
+
+# ACPI Tables
+Load "PLAT.bin" 		"PLAT"		0x0001A000 0x00003FFF
+
+# EFI System Partition
+Load "EFIESP.bin" 		"EFIESP"	0x00020000 0x0001FFFF
+
+# Operating System
+Load "MMOS.bin" 		"MMOS" 		0x00046000 0x000289B8
+Load "MainOS.bin" 		"MainOS"	0x00070000 0x003CDF7F 0xEACCE221
+Load "Data.bin" 		"Data"		0x00440000 0x01918FFF 0xEACCE221
